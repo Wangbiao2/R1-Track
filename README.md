@@ -4,5 +4,5 @@ A Single Object Tracking Repo Based on Qwen2.5-VL Model with SFT and GRPO Fine-T
 The checkpoints, training pipeline, inference scripts and data will be available before April 15, 2025.
 
 # News
-GRPO dataset is avaulable here. https://huggingface.co/datasets/WangBiao/R1-Track-5k 
+GRPO dataset is available here. https://huggingface.co/datasets/WangBiao/R1-Track-5k 
 
