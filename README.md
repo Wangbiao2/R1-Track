@@ -56,8 +56,7 @@
 
 
 ## Data
-- R1-Track-5k
-R1-Track-5k dataset is available at https://huggingface.co/datasets/WangBiao/R1-Track-5k. 
+- R1-Track-5k dataset is available at https://huggingface.co/datasets/WangBiao/R1-Track-5k. 
 Note that this dataset was randomly sampled from [Got10k](http://got-10k.aitestunion.com/) and has not undergone manual review. Some image pairs are of relatively low quality, but we will address and improve this issue in the future.
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/25afecd3-16b9-4a02-a816-eb2a8bf63ba4" />
 
