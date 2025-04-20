@@ -50,7 +50,7 @@
 ```
 
 # Reference Repos
-- Base Model: We use [Qwen2.5-Vl-3B](https://github.com/QwenLM/Qwen2.5-VL) as our base model.
+- Base Model: We use [Qwen2.5-Vl-Instruct-3B](https://github.com/QwenLM/Qwen2.5-VL) as our base model.
 - SFT: We perform supervised fine-tuning based on [LLama-Factory](https://github.com/hiyouga/LLaMA-Factory).
 - RFT: We conduct reinforcement learning fine-tuning using [EasyR1](https://github.com/hiyouga/EasyR1).
 
