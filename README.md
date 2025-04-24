@@ -53,8 +53,9 @@
 - Base Model: We use [Qwen2.5-Vl-Instruct-3B](https://github.com/QwenLM/Qwen2.5-VL) and [VLM-R1-3B](https://github.com/om-ai-lab/VLM-R1) as our base model.
 - SFT: We perform supervised fine-tuning based on [LLama-Factory](https://github.com/hiyouga/LLaMA-Factory).
 - RFT: We conduct reinforcement learning fine-tuning using [EasyR1](https://github.com/hiyouga/EasyR1).
-- Track: [PyTracking](https://github.com/visionml/pytracking).
+- Object Track: [PyTracking](https://github.com/visionml/pytracking).
 - Inference: [vllm](https://github.com/vllm-project/vllm).
+- Data: We utilized a portion of the [GOT10k-train] dataset to assemble our training set and conducted one-shot testing exclusively on [GOT10k-test]. (http://got-10k.aitestunion.com/)(http://got-10k.aitestunion.com/)
 
 
 ## Data
