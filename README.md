@@ -55,7 +55,7 @@
 - RFT: We conduct reinforcement learning fine-tuning using [EasyR1](https://github.com/hiyouga/EasyR1).
 - Object Track: [PyTracking](https://github.com/visionml/pytracking).
 - Inference: [vllm](https://github.com/vllm-project/vllm).
-- Data: We utilized a portion of the [GOT10k-train] dataset to assemble our training set and conducted one-shot testing exclusively on [GOT10k-test]. (http://got-10k.aitestunion.com/)(http://got-10k.aitestunion.com/)
+- Data: We utilized a portion of the [GOT10k-train](http://got-10k.aitestunion.com/) dataset to assemble our training set and conducted one-shot testing exclusively on [GOT10k-test](http://got-10k.aitestunion.com/).
 
 
 ## Data
