@@ -58,7 +58,7 @@
 
 
 ## Data
-- R1-Track-5k (`336 \times 336`)dataset is available at https://huggingface.co/datasets/WangBiao/R1-Track-5k. 
+- R1-Track-5k ($336 \times 336$)dataset is available at https://huggingface.co/datasets/WangBiao/R1-Track-5k. 
 Note that this dataset was randomly sampled from [Got10k](http://got-10k.aitestunion.com/) and has not undergone manual review. Some image pairs are of relatively low quality, but we will address and improve this issue in the future.
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/25afecd3-16b9-4a02-a816-eb2a8bf63ba4" />
 
@@ -70,3 +70,4 @@ A detailed user guide will be launched in the near future.
 ## Timeline
 - [2025/04/02] **We released [R1-Track-5K] dataset. (https://huggingface.co/datasets/WangBiao/R1-Track-5k)**!
 - [2025/04/20] **We released [R1-Track-SFT] model. (https://huggingface.co/WangBiao/R1-Track-SFT)**!
+- [2025/04/24] **We released [R1-Track-Data-ShareGPT] dataset. You can effortlessly integrate it with LlamaFactory for use. (https://huggingface.co/datasets/WangBiao/R1-Track-Data-ShareGPT)**!
