@@ -28,7 +28,7 @@
     }
 ```
 
-- RFT
+- RL
 ```python
     {
         "role": "system",
@@ -51,7 +51,7 @@
 ```
 
 # Reference Repos
-- Base Model: We use [Qwen2.5-Vl-Instruct-3B](https://github.com/QwenLM/Qwen2.5-VL) and [VLM-R1-3B](https://github.com/om-ai-lab/VLM-R1) as our base model.
+- Base Model: We use [Qwen2.5-Vl-Instruct-3B](https://github.com/QwenLM/Qwen2.5-VL) as our base model.
 - SFT: We perform supervised fine-tuning based on [LLama-Factory](https://github.com/hiyouga/LLaMA-Factory).
 - RFT: We conduct reinforcement learning fine-tuning using [EasyR1](https://github.com/hiyouga/EasyR1).
 - Object Track: [PyTracking](https://github.com/visionml/pytracking).
