@@ -68,8 +68,21 @@ Note that this dataset was randomly sampled from [Got10k](http://got-10k.aitestu
 ## Quick Start
 A detailed user guide will be launched in the near future.
 
+-SFT
+```bash
+Please refer to the official LLaMA-Factory repo for env configuration guidelines, and add the supplied datasets and scripts to the specified directories as outlined in the documentation.
+```
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1,2,3 llamafactory-cli train examples/train_lora/r1_track_lora_sft.yaml
+```
+
+```bash
+llamafactory-cli export examples/merge_lora/r1_track_lora_sft.yaml
+```
+
 
 ## Timeline
-- [2025/04/02] **We released [R1-Track-5K](https://huggingface.co/datasets/WangBiao/R1-Track-5k) dataset.**!
-- [2025/04/20] **We released [R1-Track-SFT](https://huggingface.co/WangBiao/R1-Track-SFT) model.**!
-- [2025/04/24] **We released [R1-Track-Data-ShareGPT](https://huggingface.co/datasets/WangBiao/R1-Track-Data-ShareGPT) dataset. You can effortlessly integrate it with LlamaFactory for use.**!
+- [2025/04/02] **We released [R1-Track-5K](https://huggingface.co/datasets/WangBiao/R1-Track-5k) dataset!**
+- [2025/04/20] **We released [R1-Track-SFT](https://huggingface.co/WangBiao/R1-Track-SFT) model!**
+- [2025/04/24] **We released [R1-Track-Data-ShareGPT](https://huggingface.co/datasets/WangBiao/R1-Track-Data-ShareGPT) dataset. You can effortlessly integrate it with LlamaFactory for use!**
