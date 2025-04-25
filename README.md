@@ -1,5 +1,5 @@
-# R1-Track
-- This Is A Simple Single Object Tracking Repo Based on Qwen2.5-VL MLLM with SFT and ‌RFT.
+# R1-Track: Direct Application of Multimodal Foundation Models to Visual Object Tracking via Reinforcement Learning
+
 - Visual (Single) Object Tracking aims to continuously localize and estimate the scale of a target in subsequent video frames, given only its initial state in the first frame. This task can be simplified to template matching between image pairs, with traditional trackers predominantly employing explicit classification-regression modeling through Correlation Filters, Siamese networks, and Vision Transformers (ViT). Leveraging advancements in Multi-Modal Large Language Models (MLLMs) such as Qwen2.5-VL and their robust grounding capabilities, we explore adopting MLLMs for end-to-end tracking tasks, eliminating the need for fragmented subtask modeling.
 
 - The checkpoints, training pipeline, inference scripts and data will be available before April 30, 2025.
@@ -80,6 +80,17 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 llamafactory-cli train examples/train_lora/r1_track
 ```bash
 llamafactory-cli export examples/merge_lora/r1_track_lora_sft.yaml
 ```
+
+-RL
+```bash
+Please refer to the official EasyR1 repo for env configuration guidelines, and add the supplied datasets and scripts to the specified directories as outlined in the documentation.
+```
+
+
+## Some Findings
+Our assembled fine-tuning dataset contains a critical flaw :scream: : all target objects in the images have nearly equal width-to-height ratios (1:1), making them effectively "square." This caused R1-Track-SFT to easily learn this appearance feature and overfit 
+, leading to significant errors during video tracking. In contrast, R1-Track-GRPO avoided this issue :sunglasses:, likely through its reasoning process or soft supervision from GIoU rewards 
+. While we plan to construct more balanced datasets in the future, this observation already demonstrates the advantages of reinforcement learning in mitigating dataset biases.
 
 
 ## Timeline
