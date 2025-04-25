@@ -70,22 +70,34 @@ Note that this dataset was randomly sampled from [Got10k](http://got-10k.aitestu
 A detailed user guide will be launched in the near future.
 
 -SFT
+1. Env Preparation
 ```bash
 Please refer to the official LLaMA-Factory repo for env configuration guidelines, and add the supplied datasets and scripts to the specified directories as outlined in the documentation.
 ```
 
+2. Train Lora
 ```bash
 CUDA_VISIBLE_DEVICES=0,1,2,3 llamafactory-cli train examples/train_lora/r1_track_lora_sft.yaml
 ```
 
+3. Merge Lora
 ```bash
 llamafactory-cli export examples/merge_lora/r1_track_lora_sft.yaml
 ```
 
 -RL
+1. Env Preparation
 ```bash
 Please refer to the official EasyR1 repo for env configuration guidelines, and add the supplied datasets and scripts to the specified directories as outlined in the documentation.
 ```
+
+-Infer
+1. Deployment
+```bash
+CUDA_VISIBLE_DEVICES=0,1,2,3 python3.10 -m vllm.entrypoints.openai.api_server --served-model-name R1-Track --model  WangBiao/R1-Track-GRPO  --gpu-memory-utilization 0.9 --tensor-parallel-size 4 --port 8888 --limit-mm-per-prompt image=2
+```
+
+2. Tracking
 
 
 ## Some Findings
