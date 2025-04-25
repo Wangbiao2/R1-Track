@@ -49,6 +49,7 @@
         ],
     }
 ```
+<img width="450" alt="image" src="https://github.com/user-attachments/assets/a2a6f11b-217b-4f95-b961-30dd23f80707" />
 
 # Reference Repos
 - Base Model: We use [Qwen2.5-Vl-Instruct-3B](https://github.com/QwenLM/Qwen2.5-VL) as our base model.
