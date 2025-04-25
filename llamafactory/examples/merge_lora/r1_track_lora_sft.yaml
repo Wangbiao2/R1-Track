@@ -1,0 +1,13 @@
+### Note: DO NOT use quantized model or quantization_bit when merging lora adapters
+
+### model
+model_name_or_path: Qwen/Qwen2.5-VL-3B-Instruct
+adapter_name_or_path: saves/r1_track-500step
+template: qwen2_vl
+trust_remote_code: true
+
+### export
+export_dir: ./R1-Track-SFT
+export_size: 5
+export_device: cpu
+export_legacy_format: false
