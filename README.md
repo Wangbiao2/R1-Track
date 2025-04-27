@@ -69,41 +69,50 @@ Note that this dataset was randomly sampled from [Got10k](http://got-10k.aitestu
 ## Quick Start
 A detailed user guide will be launched in the near future.
 
--SFT
-1. Env Preparation
+-*SFT*
+1. *Env Preparation*
 ```bash
 Please refer to the official LLaMA-Factory repo for env configuration guidelines, and add the supplied datasets and scripts to the specified directories as outlined in the documentation.
 ```
 
-2. Train Lora
+2. *Train Lora*
 ```bash
 CUDA_VISIBLE_DEVICES=0,1,2,3 llamafactory-cli train examples/train_lora/r1_track_lora_sft.yaml
 ```
 
-3. Merge Lora
+3. *Merge Lora*
 ```bash
 llamafactory-cli export examples/merge_lora/r1_track_lora_sft.yaml
 ```
 
 -RL
-1. Env Preparation
+1. *Env Preparation*
 ```bash
 Please refer to the official EasyR1 repo for env configuration guidelines, and add the supplied datasets and scripts to the specified directories as outlined in the documentation.
 ```
 
--Infer
-1. Deployment
+-*Infer*
+1. *Deployment*
 ```bash
 CUDA_VISIBLE_DEVICES=0,1,2,3 python3.10 -m vllm.entrypoints.openai.api_server --served-model-name R1-Track --model  WangBiao/R1-Track-GRPO  --gpu-memory-utilization 0.9 --tensor-parallel-size 4 --port 8888 --limit-mm-per-prompt image=2
 ```
 
-2. Tracking
+2. *Tracking*
 
 
 ## Some Findings
 Our assembled fine-tuning dataset contains a critical flaw :scream: : all target objects in the images have nearly equal width-to-height ratios (1:1), making them effectively "square." This caused R1-Track-SFT to easily learn this appearance feature and overfit 
 , leading to significant errors during video tracking. In contrast, R1-Track-GRPO avoided this issue :sunglasses:, likely through its reasoning process or soft supervision from GIoU rewards 
 . While we plan to construct more balanced datasets in the future, this observation already demonstrates the advantages of reinforcement learning in mitigating dataset biases.
+
+## Results
+Our initial R1-Track-GRPO model achieved an AO score of 0.586 on GOT10k test set without tuning any tracking hyperparameters (including template and search region sizes), using only 5k low-quality image pairs for training. In contrast, the preliminary R1-Track-SFT failed to produce valid test results due to severe overfitting.
+
+| Tracker/GOT10k       | AO    |  $SR_{0.5}$  |  $SR_{0.75}$| Params     |
+|----------------------|-------|--------------|-------------|------------|
+|Qwen2.5-VL-3B-Instruct| -     |-             |-            | 3B         |
+| **R1-Track-GRPO**    | 0.586 | 0.676        | 0.470       | 3B         |
+
 
 
 ## Timeline
