@@ -123,4 +123,4 @@ Our initial R1-Track-GRPO model achieved an AO score of 0.586 on GOT10k test set
 - [2025/04/02] **We released [R1-Track-5K](https://huggingface.co/datasets/WangBiao/R1-Track-5k) dataset!**
 - [2025/04/20] **We released [R1-Track-SFT](https://huggingface.co/WangBiao/R1-Track-SFT) model!**
 - [2025/04/24] **We released [R1-Track-Data-ShareGPT](https://huggingface.co/datasets/WangBiao/R1-Track-Data-ShareGPT) dataset. You can effortlessly integrate it with LlamaFactory for use!**
-- [2025/04/27] **We released the R1-Track inference script for GOT-10k dataset evaluation.!**
+- [2025/04/27] **We released the R1-Track inference script for GOT-10k dataset evaluation!**
