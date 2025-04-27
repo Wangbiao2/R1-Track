@@ -69,7 +69,7 @@ Note that this dataset was randomly sampled from [Got10k](http://got-10k.aitestu
 ## Quick Start
 A detailed user guide will be launched in the near future.
 
--*SFT*
+-**SFT**
 1. *Env Preparation*
 ```bash
 Please refer to the official LLaMA-Factory repo for env configuration guidelines, and add the supplied datasets and scripts to the specified directories as outlined in the documentation.
@@ -85,20 +85,24 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 llamafactory-cli train examples/train_lora/r1_track
 llamafactory-cli export examples/merge_lora/r1_track_lora_sft.yaml
 ```
 
--RL
+-**RL**
 1. *Env Preparation*
 ```bash
 Please refer to the official EasyR1 repo for env configuration guidelines, and add the supplied datasets and scripts to the specified directories as outlined in the documentation.
 ```
 
--*Infer*
+2. *Train*
+
+-**Infer**
 1. *Deployment*
 ```bash
 CUDA_VISIBLE_DEVICES=0,1,2,3 python3.10 -m vllm.entrypoints.openai.api_server --served-model-name R1-Track --model  WangBiao/R1-Track-GRPO  --gpu-memory-utilization 0.9 --tensor-parallel-size 4 --port 8888 --limit-mm-per-prompt image=2
 ```
 
-2. *Tracking*
-
+2. *Tracking on GOT10k*
+```bash
+python infer_script/r1track.py
+```
 
 ## Some Findings
 Our assembled fine-tuning dataset contains a critical flaw :scream: : all target objects in the images have nearly equal width-to-height ratios (1:1), making them effectively "square." This caused R1-Track-SFT to easily learn this appearance feature and overfit 
@@ -108,10 +112,10 @@ Our assembled fine-tuning dataset contains a critical flaw :scream: : all target
 ## Results
 Our initial R1-Track-GRPO model achieved an AO score of 0.586 on GOT10k test set without tuning any tracking hyperparameters (including template and search region sizes), using only 5k low-quality image pairs for training. In contrast, the preliminary R1-Track-SFT failed to produce valid test results due to severe overfitting.
 
-| Tracker/GOT10k       | AO    |  $SR_{0.5}$  |  $SR_{0.75}$| Params     |
-|----------------------|-------|--------------|-------------|------------|
-|Qwen2.5-VL-3B-Instruct| -     |-             |-            | 3B         |
-| **R1-Track-GRPO**    | 0.586 | 0.676        | 0.470       | 3B         |
+| Tracker/GOT10k       | $AO$    |  $SR_{0.5}$  |  $SR_{0.75}$| Params     |
+|----------------------|-------|--------------|-------------|--------------|
+|Qwen2.5-VL-3B-Instruct| -     |-             |-            | 3B           |
+| **R1-Track-GRPO**    | 0.586 | 0.676        | 0.470       | 3B           |
 
 
 
@@ -119,3 +123,4 @@ Our initial R1-Track-GRPO model achieved an AO score of 0.586 on GOT10k test set
 - [2025/04/02] **We released [R1-Track-5K](https://huggingface.co/datasets/WangBiao/R1-Track-5k) dataset!**
 - [2025/04/20] **We released [R1-Track-SFT](https://huggingface.co/WangBiao/R1-Track-SFT) model!**
 - [2025/04/24] **We released [R1-Track-Data-ShareGPT](https://huggingface.co/datasets/WangBiao/R1-Track-Data-ShareGPT) dataset. You can effortlessly integrate it with LlamaFactory for use!**
+- [2025/04/27] **We released the R1-Track inference script for GOT-10k dataset evaluation.!**
