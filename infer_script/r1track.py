@@ -363,8 +363,8 @@ class R1TRACK:
 
 if __name__ == "__main__":
     r1track = R1TRACK(
-                 hostname="10.67.250.12",
-                 port=8898, 
+                 hostname="xx.xx.xxx.xx",
+                 port=8888,
                  model_name="R1-Track", 
                  is_think_model=True,
                  max_workers=8,
@@ -375,6 +375,6 @@ if __name__ == "__main__":
                  top_p=0.5,
                  top_k=20,
                  max_tokens=512,
-                 dataset_path="/Users/wangbiao11/Desktop/track/test",
-                 result_path="/Users/wangbiao11/Desktop/track/result_GOT10k___",)
+                 dataset_path="xxx",
+                 result_path="xxx",)
     r1track.track_all_videos()
