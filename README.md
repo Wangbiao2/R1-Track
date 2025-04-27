@@ -2,8 +2,6 @@
 
 - Visual (Single) Object Tracking aims to continuously localize and estimate the scale of a target in subsequent video frames, given only its initial state in the first frame. This task can be simplified to template matching between image pairs, with traditional trackers predominantly employing explicit classification-regression modeling through Correlation Filters, Siamese networks, and Vision Transformers (ViT). Leveraging advancements in Multi-Modal Large Language Models (MLLMs) such as Qwen2.5-VL and their robust grounding capabilities, we explore adopting MLLMs for end-to-end tracking tasks, eliminating the need for fragmented subtask modeling.
 
-- The checkpoints, training pipeline, inference scripts and data will be available before April 30, 2025.
-
 
 ## Prompt
 - SFT
@@ -67,9 +65,8 @@ Note that this dataset was randomly sampled from [Got10k](http://got-10k.aitestu
 
 
 ## Quick Start
-A detailed user guide will be launched in the near future.
 
--**SFT**
+- **SFT**
 1. *Env Preparation*
 ```bash
 Please refer to the official LLaMA-Factory repo for env configuration guidelines, and add the supplied datasets and scripts to the specified directories as outlined in the documentation.
@@ -85,15 +82,19 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 llamafactory-cli train examples/train_lora/r1_track
 llamafactory-cli export examples/merge_lora/r1_track_lora_sft.yaml
 ```
 
--**RL**
+- **RL**
 1. *Env Preparation*
 ```bash
 Please refer to the official EasyR1 repo for env configuration guidelines, and add the supplied datasets and scripts to the specified directories as outlined in the documentation.
 ```
 
 2. *Train*
+```bash
+cd EasyR1
+bash /Users/wangbiao11/Desktop/repos/R1-Track/EasyR1/examples/qwen2_5_vl_3b_track5k_grpo_w_think.sh
+```
 
--**Infer**
+- **Infer**
 1. *Deployment*
 ```bash
 CUDA_VISIBLE_DEVICES=0,1,2,3 python3.10 -m vllm.entrypoints.openai.api_server --served-model-name R1-Track --model  WangBiao/R1-Track-GRPO  --gpu-memory-utilization 0.9 --tensor-parallel-size 4 --port 8888 --limit-mm-per-prompt image=2
@@ -118,9 +119,29 @@ Our initial R1-Track-GRPO model achieved an AO score of 0.586 on GOT10k test set
 | **R1-Track-GRPO**    | 0.586 | 0.676        | 0.470       | 3B           |
 
 
-
 ## Timeline
 - [2025/04/02] **We released [R1-Track-5K](https://huggingface.co/datasets/WangBiao/R1-Track-5k) dataset!**
 - [2025/04/20] **We released [R1-Track-SFT](https://huggingface.co/WangBiao/R1-Track-SFT) model!**
 - [2025/04/24] **We released [R1-Track-Data-ShareGPT](https://huggingface.co/datasets/WangBiao/R1-Track-Data-ShareGPT) dataset. You can effortlessly integrate it with LlamaFactory for use!**
 - [2025/04/27] **We released the R1-Track inference script for GOT-10k dataset evaluation!**
+- [2025/04/27] **We released the R1-Track-GRPO training script based on EasyR1!**
+- [2025/04/28] **We released [R1-Track-GRPO](https://huggingface.co/WangBiao/R1-Track-GRPO) model!**
+
+## TODO
+- 1. Generate a more refined, large-scale, and diversified dataset based on existing tracking training data;
+- 2. Train the 7B model;
+- 3. Support for multiple images;
+- 4. Explore improved methods for generating cold-start data;
+
+We will strive to elevate R1-Track to the `T1` level of trackers.
+
+
+## Citation
+```bibtex
+@misc{wang2025r1track,
+  title        = {R1-Track: Direct Application of MLLMs to Visual Object Tracking via Reinforcement Learning},
+  author       = {Biao Wang},
+  howpublished = {\url{https://github.com/Wangbiao2/R1-Track}},
+  year         = {2025}
+}
+```
