@@ -59,7 +59,7 @@
 
 
 ## Data
-- R1-Track-5k ($336 \times 336$)dataset is available at https://huggingface.co/datasets/WangBiao/R1-Track-5k (For EasyR1) and https://huggingface.co/datasets/WangBiao/R1-Track-Data-ShareGPT (For Llamafactory). 
+- R1-Track-5k ($336 \times 336$) dataset is available at https://huggingface.co/datasets/WangBiao/R1-Track-5k (For EasyR1) and https://huggingface.co/datasets/WangBiao/R1-Track-Data-ShareGPT (For Llamafactory). 
 Note that this dataset was randomly sampled from [Got10k](http://got-10k.aitestunion.com/) and has not undergone manual review. Some image pairs are of relatively low quality, but we will address and improve this issue in the future.
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/25afecd3-16b9-4a02-a816-eb2a8bf63ba4" />
 
@@ -97,7 +97,7 @@ bash examples/qwen2_5_vl_3b_track5k_grpo_w_think.sh
 - **Infer**
 1. *Deployment*
 ```bash
-CUDA_VISIBLE_DEVICES=0,1,2,3 python3.10 -m vllm.entrypoints.openai.api_server --served-model-name R1-Track --model  WangBiao/R1-Track-GRPO  --gpu-memory-utilization 0.9 --tensor-parallel-size 4 --port 8888 --limit-mm-per-prompt image=2
+CUDA_VISIBLE_DEVICES=0,1,2,3 python -m vllm.entrypoints.openai.api_server --served-model-name R1-Track --model  WangBiao/R1-Track-GRPO  --gpu-memory-utilization 0.9 --tensor-parallel-size 4 --port 8888 --limit-mm-per-prompt image=2
 ```
 
 2. *Tracking on GOT10k*
@@ -113,12 +113,12 @@ Our assembled fine-tuning dataset contains a critical flaw :scream: : all target
 ## Results
 Our initial R1-Track-GRPO model achieved an AO score of 0.586 on GOT10k test set without tuning any tracking hyperparameters (including template and search region sizes), using only 5k low-quality image pairs for training. In contrast, the preliminary R1-Track-SFT failed to produce valid test results due to severe overfitting.
 
-| Tracker/GOT10k       | $AO$    |  $SR_{0.5}$  |  $SR_{0.75}$| Params       |
-|----------------------|---------|--------------|-------------|--------------|
-|LLaVA-1.5             | 0.235   |0.202         |-            | 7B           |
-|Qwen2.5-VL-7B-Instruct| 0.126   |0.011         |-            | 7B           |
-| **R1-Track-GRPO**    | 0.586   |0.676         | 0.470       | 3B           |
-
+| Tracker/GOT10k                | $AO$    |  $SR_{0.5}$  |  $SR_{0.75}$| Params       |
+|-------------------------------|---------|--------------|-------------|--------------|
+|LLaVA-1.5                      | 0.235   |0.202         |-            | 7B           |
+|Qwen2.5-VL-7B-Instruct         | 0.126   |0.011         |-            | 7B           |
+| **R1-Track-GRPO**             | 0.586   |0.676         |0.470        | 3B           |
+| **R1-Track-GRPO-wo-Think**    | 0.585   |0.673         |0.500        | 3B           |
 
 
 ## Timeline
@@ -128,6 +128,7 @@ Our initial R1-Track-GRPO model achieved an AO score of 0.586 on GOT10k test set
 - [2025/04/27] **We released the R1-Track inference script for GOT-10k dataset evaluation!**
 - [2025/04/27] **We released the R1-Track-GRPO training script based on EasyR1!**
 - [2025/04/28] **We released [R1-Track-GRPO](https://huggingface.co/WangBiao/R1-Track-GRPO) model!**
+- [2025/04/28] **We released [R1-Track-GRPO-wo-Think](https://huggingface.co/WangBiao/R1-Track-GRPO-wo-Think) model!**
 
 ## TODO
 - 1. Generate a more refined, large-scale, and diversified dataset based on existing tracking training data;
