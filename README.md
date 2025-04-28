@@ -113,10 +113,12 @@ Our assembled fine-tuning dataset contains a critical flaw :scream: : all target
 ## Results
 Our initial R1-Track-GRPO model achieved an AO score of 0.586 on GOT10k test set without tuning any tracking hyperparameters (including template and search region sizes), using only 5k low-quality image pairs for training. In contrast, the preliminary R1-Track-SFT failed to produce valid test results due to severe overfitting.
 
-| Tracker/GOT10k       | $AO$    |  $SR_{0.5}$  |  $SR_{0.75}$| Params     |
-|----------------------|-------|--------------|-------------|--------------|
-|Qwen2.5-VL-3B-Instruct| -     |-             |-            | 3B           |
-| **R1-Track-GRPO**    | 0.586 | 0.676        | 0.470       | 3B           |
+| Tracker/GOT10k       | $AO$    |  $SR_{0.5}$  |  $SR_{0.75}$| Params       |
+|----------------------|---------|--------------|-------------|--------------|
+|LLaVA-1.5             | 0.235   |0.202         |-            | 7B           |
+|Qwen2.5-VL-7B-Instruct| 0.126   |0.011         |-            | 7B           |
+| **R1-Track-GRPO**    | 0.586   |0.676         | 0.470       | 3B           |
+
 
 
 ## Timeline
