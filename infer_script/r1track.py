@@ -105,7 +105,7 @@ class R1TRACK:
         """Process all videos using thread pool executor."""
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
             futures = []
-            for video_name in self.video_names[0:2]:
+            for video_name in self.video_names:
                 tracker = R1TRACK(
                     hostname=self.hostname,
                     port=self.port,
