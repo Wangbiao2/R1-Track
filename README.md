@@ -91,7 +91,7 @@ Please refer to the official EasyR1 repo for env configuration guidelines, and a
 2. *Train*
 ```bash
 cd EasyR1
-bash /Users/wangbiao11/Desktop/repos/R1-Track/EasyR1/examples/qwen2_5_vl_3b_track5k_grpo_w_think.sh
+bash examples/qwen2_5_vl_3b_track5k_grpo_w_think.sh
 ```
 
 - **Infer**
