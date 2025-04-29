@@ -2,14 +2,12 @@
 
 - Visual (Single) Object Tracking aims to continuously localize and estimate the scale of a target in subsequent video frames, given only its initial state in the first frame. This task can be simplified to template matching between image pairs, with traditional trackers predominantly employing explicit classification-regression modeling through Correlation Filters, Siamese networks, and Vision Transformers (ViT). Leveraging advancements in Multi-Modal Large Language Models (MLLMs) such as Qwen2.5-VL and their robust grounding capabilities, we explore adopting MLLMs for end-to-end tracking tasks, eliminating the need for fragmented subtask modeling.
 
+- R1-Track supports flexible initialization from either text descriptions or bounding boxes.
+
 
 ## Prompt
-- SFT
+- **SFT or RL_wo_Think**
 ```python
-    {
-        "role": "system",
-        "content": "You are a helpful assistant.",
-    },
     {
         "role": "user",
         "content": [
@@ -26,12 +24,8 @@
     }
 ```
 
-- RL
+- **RL_with_Think**
 ```python
-    {
-        "role": "system",
-        "content": "You are a helpful assistant.",
-    },
     {
         "role": "user",
         "content": [

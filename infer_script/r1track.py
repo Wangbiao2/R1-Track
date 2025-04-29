@@ -1,4 +1,4 @@
-# Copyright (c) 2025 Your Name. All rights reserved.
+# Copyright (c) 2025 Biao Wang. All rights reserved.
 # Use of this source code is governed by the MIT license that can be
 # found in the LICENSE file.
 
