@@ -2,7 +2,7 @@
 
 - Visual (Single) Object Tracking aims to continuously localize and estimate the scale of a target in subsequent video frames, given only its initial state in the first frame. This task can be simplified to template matching between image pairs, with traditional trackers predominantly employing explicit classification-regression modeling through Correlation Filters, Siamese networks, and Vision Transformers (ViT). Leveraging advancements in Multi-Modal Large Language Models (MLLMs) such as Qwen2.5-VL and their robust grounding capabilities, we explore adopting MLLMs for end-to-end tracking tasks, eliminating the need for fragmented subtask modeling.
 
-- R1-Track supports flexible initialization from either text descriptions or bounding boxes.
+- R1-Track supports flexible initialization from either **text descriptions** or **bounding boxes**.
 
 
 ## Prompt
@@ -47,16 +47,16 @@
 - Base Model: We use [Qwen2.5-Vl-Instruct-3B](https://github.com/QwenLM/Qwen2.5-VL) as our base model.
 - SFT: We perform supervised fine-tuning based on [LLama-Factory](https://github.com/hiyouga/LLaMA-Factory).
 - RFT: We conduct reinforcement learning fine-tuning using [EasyR1](https://github.com/hiyouga/EasyR1).
-- Object Track: [PyTracking](https://github.com/visionml/pytracking).
 - Inference: [vllm](https://github.com/vllm-project/vllm).
 - Data: We utilized a portion of the [GOT10k-train](http://got-10k.aitestunion.com/) dataset to assemble our training set and conducted one-shot testing exclusively on [GOT10k-test](http://got-10k.aitestunion.com/).
 
 
 ## Data
-- R1-Track-5k ($336 \times 336$) dataset is available at https://huggingface.co/datasets/WangBiao/R1-Track-5k (For EasyR1) and https://huggingface.co/datasets/WangBiao/R1-Track-Data-ShareGPT (For Llamafactory). 
-Note that this dataset was randomly sampled from [Got10k](http://got-10k.aitestunion.com/) and has not undergone manual review. Some image pairs are of relatively low quality, but we will address and improve this issue in the future.
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/25afecd3-16b9-4a02-a816-eb2a8bf63ba4" />
+- **R1-Track-5k ($336 \times 336$)** 
+    - This dataset is available at https://huggingface.co/datasets/WangBiao/R1-Track-5k (For EasyR1) and https://huggingface.co/datasets/WangBiao/R1-Track-Data-ShareGPT (For Llamafactory). 
+    - Note that this dataset was randomly sampled from [Got10k](http://got-10k.aitestunion.com/) and has not undergone manual review. Some image pairs are of relatively low quality.
 
+- **R1-Track-75k ($112 \times 112, 224 \times 224, 336 \times 336, 448 \times 448$, 2 images and 3 images )** 
 
 ## Quick Start
 
@@ -101,7 +101,7 @@ python infer_script/r1track.py
 
 ## Some Findings
 Our assembled fine-tuning dataset contains a critical flaw :scream: : all target objects in the images have nearly equal width-to-height ratios (1:1), making them effectively "square." This caused R1-Track-SFT to easily learn this appearance feature and overfit 
-, leading to significant errors during video tracking. In contrast, R1-Track-GRPO avoided this issue :sunglasses:, likely through its reasoning process or soft supervision from GIoU rewards 
+, leading to significant errors during video tracking. In contrast, R1-Track-GRPO avoided this issue :sunglasses:, likely through its soft supervision from GIoU rewards 
 . While we plan to construct more balanced datasets in the future, this observation already demonstrates the advantages of reinforcement learning in mitigating dataset biases.
 
 ## Results
@@ -129,6 +129,7 @@ Our initial R1-Track-GRPO model achieved an AO score of 0.586 on GOT10k test set
 - 2. Train the 7B model;
 - 3. Support for multiple images;
 - 4. Explore improved methods for generating cold-start data;
+- 5. Supports evaluating other datasets
 
 We will strive to elevate R1-Track to the `T1` level of trackers.
 

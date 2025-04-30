@@ -5,7 +5,6 @@
 """A simple R1-Track infer script for GOT-10k dataset evaluation."""
 
 import os
-import sys
 import re
 import json
 import base64
@@ -24,7 +23,9 @@ from crop_image import sample_target, map_bbox_back
 class R1TRACK:
     """R1-Track v0.0 only support eval GOT10k dataset."""
 
-    def __init__(self, 
+    def __init__(self,
+                 init_mode="bbox", # choice [bbox, text]
+                 text_description=None, # only use when init_mode=="text" 
                  hostname="1.1.1.1",
                  port=8888,
                  model_name="R1-Track", 
@@ -44,6 +45,8 @@ class R1TRACK:
         """Initialize R1Track tracker.
 
         Args:
+            init_mode: Tracker init mode.
+            text_description: Text description to init the target's location.
             hostname: API server hostname.
             port: API server port.
             model_name: Name of the tracking model.
@@ -59,6 +62,8 @@ class R1TRACK:
             dataset_path: Path to GOT-10k dataset.
             result_path: Path to store tracking results.
         """
+        self.init_mode = init_mode
+        self.text_description=text_description
 
         self.url = f"http://{hostname}:{port}/v1/chat/completions"
         self.headers = {"Content-Type": "application/json"}
@@ -100,13 +105,14 @@ class R1TRACK:
         del self.bbox1_crop
         del self.last_bbox
 
-
     def track_all_videos(self):
         """Process all videos using thread pool executor."""
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
             futures = []
             for video_name in self.video_names:
                 tracker = R1TRACK(
+                    init_mode=self.init_mode,
+                    text_description=self.text_description,
                     hostname=self.hostname,
                     port=self.port,
                     model_name=self.model_name,
@@ -153,6 +159,49 @@ class R1TRACK:
             gc.collect()
             cv.destroyAllWindows()
 
+    def get_bbox_from_text(self, im, text):
+        """Send images and text descriptions to API and parse response.
+        """
+        im_base64 = self.img2base64(im)
+
+        data = {
+            "model": self.model_name,
+            "temperature": self.temperature,
+            "top_p": self.top_p,
+            "top_k": self.top_k,
+            "max_tokens": self.max_tokens,
+            "messages": [
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "image_url",
+                            "image_url": {
+                                "url": im
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "text": text,
+                        }
+                    ]
+                }
+            ]
+        }
+
+        try:
+            response = requests.post(self.url, headers=self.headers, data=json.dumps(data))
+            response.raise_for_status()
+            response_data = response.json()
+            print(response_data['choices'][0]['message']['content'])
+
+            response_real = response_data['choices'][0]['message']['content']
+            response_real = response_real.strip().replace('```json', '').replace('```', '')
+            init_bboxes = json.loads(response_real)
+            return init_bboxes[0]["bbox_2d"]
+        except:
+            raise ValueError("Please use bbox init mode!")
+        
     def get_response_from_api(self, im_1, im_2, bbox_1):
         """Send images to API and parse response.
 
@@ -297,14 +346,24 @@ class R1TRACK:
             video_name: Name of the video sequence.
         """
         video_path = os.path.join(self.dataset_path, video_name)
-        gt_path = os.path.join(video_path, "groundtruth.txt")
 
         self.image_paths = self.get_sorted_image_paths(video_path)
         video_length = len(self.image_paths)
         print(f"Video {video_name} has {video_length} images.\n")
 
-        bbox1 = self.read_1st_frame_groundtruth(gt_path)
-        self.last_bbox = bbox1 # [x,y,w,h]
+        im1 = cv.imread(self.image_paths[0])
+
+        if self.init_mode == "bbox":
+            gt_path = os.path.join(video_path, "groundtruth.txt")
+            bbox1 = self.read_1st_frame_groundtruth(gt_path)
+        elif self.init_mode == "text" and self.text_description is not None:
+            bbox1 = self.get_bbox_from_text(im1, self.text_description)
+        elif self.init_mode == "text" and self.text_description is None:
+            raise ValueError("Please input the text_description!")
+        else:
+            raise ValueError("Now only supports bbox and text init mode!")
+        
+        self.last_bbox = bbox1  # [x,y,w,h]
 
         self.bbox_all = []
         self.bbox_all.append(self.last_bbox)
@@ -312,12 +371,11 @@ class R1TRACK:
         self.time_all = []
         self.time_all.append(0.0)
 
-        im1 = cv.imread(self.image_paths[0])
         self.im1_crop, _, self.bbox1_crop, _ = sample_target(im1, bbox1, self.template_area_factor, self.mllm_img_size)
         self.xyxy_last = self.bbox1_crop
 
     def track(self):
-        for idx, cur_frame_path in enumerate(tqdm(self.image_paths[1:])):
+        for cur_frame_path in tqdm(self.image_paths[1:]):
             start_time = time.time()
             im2 = cv.imread(cur_frame_path)
             h, w, _ = im2.shape
@@ -336,9 +394,6 @@ class R1TRACK:
             ]
             if valid_bbox[0] >= valid_bbox[2] or valid_bbox[1] >= valid_bbox[3]:
                 valid_bbox = self.xyxy_last
-                fail_count += 1
-            else:
-                fail_count = 0
             
             last_bbox_new = map_bbox_back(resize_factor, cache_x1y1, valid_bbox)
             
@@ -357,12 +412,13 @@ class R1TRACK:
             
             self.bbox_all.append(self.last_bbox)
             self.time_all.append(time.time() - start_time)
-        
         return self.bbox_all, self.time_all
 
 
 if __name__ == "__main__":
     r1track = R1TRACK(
+                 init_mode="bbox",
+                 text_description=None,
                  hostname="xx.xx.xxx.xx",
                  port=8888,
                  model_name="R1-Track", 
