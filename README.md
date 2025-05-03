@@ -111,6 +111,7 @@ Our initial R1-Track-GRPO model achieved an AO score of 0.586 on GOT10k test set
 | **R1-Track-GRPO-wo-Think-0503** |$336 \times 336$| R1-Track-100k |0.677    |0.764         |0.628      | 3B           |[R1-Track-GRPO-wo-Think-0503](https://huggingface.co/WangBiao/R1-Track-GRPO-wo-Think-0503)   |
 | **R1-Track-GRPO-wo-Think-0503** |$448 \times 448$| R1-Track-100k |0.681    |0.763         |0.630      | 3B           |[R1-Track-GRPO-wo-Think-0503](https://huggingface.co/WangBiao/R1-Track-GRPO-wo-Think-0503)   |
 
+
 ## Timeline
 - [2025/04/02] **We released 🤗[R1-Track-5K](https://huggingface.co/datasets/WangBiao/R1-Track-5k) dataset!**
 - [2025/04/20] **We released 🤗[R1-Track-SFT](https://huggingface.co/WangBiao/R1-Track-SFT) model!**
@@ -120,6 +121,7 @@ Our initial R1-Track-GRPO model achieved an AO score of 0.586 on GOT10k test set
 - [2025/04/28] **We released 🤗[R1-Track-GRPO](https://huggingface.co/WangBiao/R1-Track-GRPO) model!**
 - [2025/04/28] **We released 🤗[R1-Track-GRPO-wo-Think](https://huggingface.co/WangBiao/R1-Track-GRPO-wo-Think) model!**
 - [2025/05/03] **We released 🤗[R1-Track-100K](https://huggingface.co/datasets/WangBiao/R1-Track-100k) dataset!**
+
 
 ## TODO
 - 1. Train the 7B model;
