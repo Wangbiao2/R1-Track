@@ -99,14 +99,14 @@ python infer_script/r1track.py
 ## Results
 Our initial R1-Track-GRPO model achieved an AO score of 0.586 on GOT10k test set without tuning any tracking hyperparameters (including template and search region sizes), using only 5k low-quality image pairs for training. In contrast, the preliminary R1-Track-SFT failed to produce valid test results due to severe overfitting.
 
-| Tracker/GOT10k                |Finetune Data| $AO$    |  $SR_{0.5}$  |  $SR_{0.75}$| Params       |Ckpt|
-|-------------------------------|-------------|---------|--------------|-------------|--------------|----|
-|LLaVA-1.5                      | -           |0.235    |0.202         |-            | 7B           |-   |
-|Qwen2.5-VL-7B-Instruct         | -           |0.126    |0.011         |-            | 7B           |-   |
-| **R1-Track-SFT**              | R1-Track-5K |-        |-             |-            | 3B           |[R1-Track-SFT](https://huggingface.co/datasets/WangBiao/R1-Track-5k)  |
-| **R1-Track-GRPO**             | R1-Track-5K |0.586    |0.676         |0.470        | 3B           |[R1-Track-GRPO](https://huggingface.co/WangBiao/R1-Track-GRPO)   |
-| **R1-Track-GRPO-wo-Think**    | R1-Track-5k |0.585    |0.673         |0.500        | 3B           |  [R1-Track-GRPO-wo-Think](https://huggingface.co/WangBiao/R1-Track-GRPO-wo-Think) |
-| **R1-Track-GRPO-wo-Think-0503** | R1-Track-100k |0.585    |0.673         |0.500      | 3B           |[R1-Track-GRPO-wo-Think-0503](https://huggingface.co/WangBiao/R1-Track-GRPO-wo-Think-0503)   |
+| Tracker/GOT10k                |Crop Image Size|Finetune Data| $AO$    |  $SR_{0.5}$  |  $SR_{0.75}$| Params       |Ckpt|
+|-------------------------------|-------------|---|---------|--------------|-------------|--------------|----|
+|LLaVA-1.5                      |-| -           |0.235    |0.202         |-            | 7B           |-   |
+|Qwen2.5-VL-7B-Instruct         |-| -           |0.126    |0.011         |-            | 7B           |-   |
+| **R1-Track-SFT**              |$336 \times 336$| R1-Track-5K |-        |-             |-            | 3B           |[R1-Track-SFT](https://huggingface.co/datasets/WangBiao/R1-Track-5k)  |
+| **R1-Track-GRPO**             |$336 \times 336$| R1-Track-5K |0.586    |0.676         |0.470        | 3B           |[R1-Track-GRPO](https://huggingface.co/WangBiao/R1-Track-GRPO)   |
+| **R1-Track-GRPO-wo-Think**    |$336 \times 336$| R1-Track-5k |0.585    |0.673         |0.500        | 3B           |  [R1-Track-GRPO-wo-Think](https://huggingface.co/WangBiao/R1-Track-GRPO-wo-Think) |
+| **R1-Track-GRPO-wo-Think-0503** |$336 \times 336$| R1-Track-100k |0.677    |0.764         |0.628      | 3B           |[R1-Track-GRPO-wo-Think-0503](https://huggingface.co/WangBiao/R1-Track-GRPO-wo-Think-0503)   |
 
 
 ## Timeline
