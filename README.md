@@ -119,14 +119,13 @@ Our initial R1-Track-GRPO model achieved an AO score of 0.586 on GOT10k test set
 - [2025/04/27] **We released the R1-Track-GRPO training script based on [EasyR1](https://github.com/hiyouga/EasyR1)!**
 - [2025/04/28] **We released 🤗[R1-Track-GRPO](https://huggingface.co/WangBiao/R1-Track-GRPO) model!**
 - [2025/04/28] **We released 🤗[R1-Track-GRPO-wo-Think](https://huggingface.co/WangBiao/R1-Track-GRPO-wo-Think) model!**
-
+- [2025/05/03] **We released 🤗[R1-Track-100K](https://huggingface.co/datasets/WangBiao/R1-Track-100k) dataset!**
 
 ## TODO
-- 1. Generate a more refined, large-scale, and diversified dataset based on existing tracking training data;
-- 2. Train the 7B model;
-- 3. Support for multiple images;
-- 4. Explore improved methods for generating cold-start data;
-- 5. Supports evaluating other datasets.
+- 1. Train the 7B model;
+- 2. Support for multiple images;
+- 3. Explore improved methods for generating cold-start data;
+- 4. Supports evaluating other datasets.
 
 We will strive to elevate R1-Track to the `T1` level of trackers.
 
