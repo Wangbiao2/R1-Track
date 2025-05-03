@@ -43,23 +43,19 @@
 ```
 <img width="450" alt="image" src="https://github.com/user-attachments/assets/a2a6f11b-217b-4f95-b961-30dd23f80707" />
 
-# Reference Repos
-- Base Model: We use [Qwen2.5-Vl-Instruct-3B](https://github.com/QwenLM/Qwen2.5-VL) as our base model.
-- SFT: We perform supervised fine-tuning based on [LLama-Factory](https://github.com/hiyouga/LLaMA-Factory).
-- RFT: We conduct reinforcement learning fine-tuning using [EasyR1](https://github.com/hiyouga/EasyR1).
-- Inference: [vllm](https://github.com/vllm-project/vllm).
-- Data: We utilized a portion of the [GOT10k-train](http://got-10k.aitestunion.com/) dataset to assemble our training set and conducted one-shot testing exclusively on [GOT10k-test](http://got-10k.aitestunion.com/).
-
 
 ## Data
-- **R1-Track-5k ($336 \times 336$)** 
-    - This dataset is available at https://huggingface.co/datasets/WangBiao/R1-Track-5k (For EasyR1) and https://huggingface.co/datasets/WangBiao/R1-Track-Data-ShareGPT (For Llamafactory). 
-    - Note that this dataset was randomly sampled from [Got10k](http://got-10k.aitestunion.com/) and has not undergone manual review. Some image pairs are of relatively low quality.
+- **R1-Track-5k**
+    - This dataset is available at https://huggingface.co/datasets/WangBiao/R1-Track-5k (For EasyR1) and https://huggingface.co/datasets/WangBiao/R1-Track-Data-ShareGPT (For Llamafactory).
+    - $336 \times 336$, 2 images.
+    - This dataset was randomly sampled from [GOT10k](http://got-10k.aitestunion.com/) and has not undergone manual review. Some image pairs are of relatively low quality.
+- **R1-Track-100k**
+    - This dataset is available at https://huggingface.co/datasets/WangBiao/R1-Track-100k.
+    - $112 \times 112, 224 \times 224, 336 \times 336, 448 \times 448$, 2 images and 3 images
+    - This dataset was also randomly sampled from [GOT10k](http://got-10k.aitestunion.com/)
 
-- **R1-Track-75k ($112 \times 112, 224 \times 224, 336 \times 336, 448 \times 448$, 2 images and 3 images )** 
 
 ## Quick Start
-
 - **SFT**
 1. *Env Preparation*
 ```bash
@@ -99,20 +95,18 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python -m vllm.entrypoints.openai.api_server --serv
 python infer_script/r1track.py
 ```
 
-## Some Findings
-Our assembled fine-tuning dataset contains a critical flaw :scream: : all target objects in the images have nearly equal width-to-height ratios (1:1), making them effectively "square." This caused R1-Track-SFT to easily learn this appearance feature and overfit 
-, leading to significant errors during video tracking. In contrast, R1-Track-GRPO avoided this issue :sunglasses:, likely through its soft supervision from GIoU rewards 
-. While we plan to construct more balanced datasets in the future, this observation already demonstrates the advantages of reinforcement learning in mitigating dataset biases.
 
 ## Results
 Our initial R1-Track-GRPO model achieved an AO score of 0.586 on GOT10k test set without tuning any tracking hyperparameters (including template and search region sizes), using only 5k low-quality image pairs for training. In contrast, the preliminary R1-Track-SFT failed to produce valid test results due to severe overfitting.
 
-| Tracker/GOT10k                | $AO$    |  $SR_{0.5}$  |  $SR_{0.75}$| Params       |
-|-------------------------------|---------|--------------|-------------|--------------|
-|LLaVA-1.5                      | 0.235   |0.202         |-            | 7B           |
-|Qwen2.5-VL-7B-Instruct         | 0.126   |0.011         |-            | 7B           |
-| **R1-Track-GRPO**             | 0.586   |0.676         |0.470        | 3B           |
-| **R1-Track-GRPO-wo-Think**    | 0.585   |0.673         |0.500        | 3B           |
+| Tracker/GOT10k                |Finetune Data| $AO$    |  $SR_{0.5}$  |  $SR_{0.75}$| Params       |Ckpt|
+|-------------------------------|-------------|---------|--------------|-------------|--------------|----|
+|LLaVA-1.5                      | -           |0.235    |0.202         |-            | 7B           |-   |
+|Qwen2.5-VL-7B-Instruct         | -           |0.126    |0.011         |-            | 7B           |-   |
+| **R1-Track-SFT**              | R1-Track-5K |-        |-             |-            | 3B           |[R1-Track-SFT](https://huggingface.co/datasets/WangBiao/R1-Track-5k)  |
+| **R1-Track-GRPO**             | R1-Track-5K |0.586    |0.676         |0.470        | 3B           |[R1-Track-GRPO](https://huggingface.co/WangBiao/R1-Track-GRPO)   |
+| **R1-Track-GRPO-wo-Think**    | R1-Track-5k |0.585    |0.673         |0.500        | 3B           |  [R1-Track-GRPO-wo-Think](https://huggingface.co/WangBiao/R1-Track-GRPO-wo-Think) |
+| **R1-Track-GRPO-wo-Think-0503** | R1-Track-100k |0.585    |0.673         |0.500      | 3B           |[R1-Track-GRPO-wo-Think-0503](https://huggingface.co/WangBiao/R1-Track-GRPO-wo-Think-0503)   |
 
 
 ## Timeline
@@ -124,14 +118,23 @@ Our initial R1-Track-GRPO model achieved an AO score of 0.586 on GOT10k test set
 - [2025/04/28] **We released [R1-Track-GRPO](https://huggingface.co/WangBiao/R1-Track-GRPO) model!**
 - [2025/04/28] **We released [R1-Track-GRPO-wo-Think](https://huggingface.co/WangBiao/R1-Track-GRPO-wo-Think) model!**
 
+
 ## TODO
 - 1. Generate a more refined, large-scale, and diversified dataset based on existing tracking training data;
 - 2. Train the 7B model;
 - 3. Support for multiple images;
 - 4. Explore improved methods for generating cold-start data;
-- 5. Supports evaluating other datasets
+- 5. Supports evaluating other datasets.
 
 We will strive to elevate R1-Track to the `T1` level of trackers.
+
+
+# Acknowledgement
+- Base Model: We use [Qwen2.5-Vl-Instruct-3B](https://github.com/QwenLM/Qwen2.5-VL) as our base model.
+- SFT: We perform supervised fine-tuning based on [LLama-Factory](https://github.com/hiyouga/LLaMA-Factory).
+- RL: We conduct reinforcement learning fine-tuning using [EasyR1](https://github.com/hiyouga/EasyR1).
+- Inference: [vllm](https://github.com/vllm-project/vllm).
+- Data: We utilized a portion of the [GOT10k-train](http://got-10k.aitestunion.com/) dataset to assemble our training set and conducted one-shot testing exclusively on [GOT10k-test](http://got-10k.aitestunion.com/).
 
 
 ## Citation
