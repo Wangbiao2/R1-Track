@@ -25,11 +25,10 @@ class R1TRACK:
 
     def __init__(self,
                  init_mode="bbox", # choice [bbox, text]
-                 text_description=None, # only use when init_mode=="text" 
                  hostname="1.1.1.1",
                  port=8888,
-                 model_name="R1-Track", 
-                 is_think_model=True,
+                 model_name="R1-Track",
+                 is_think_model=False,
                  max_workers=8,
                  mllm_img_size=336,
                  template_area_factor=4.0,
@@ -46,7 +45,6 @@ class R1TRACK:
 
         Args:
             init_mode: Tracker init mode.
-            text_description: Text description to init the target's location.
             hostname: API server hostname.
             port: API server port.
             model_name: Name of the tracking model.
@@ -63,7 +61,6 @@ class R1TRACK:
             result_path: Path to store tracking results.
         """
         self.init_mode = init_mode
-        self.text_description=text_description
 
         self.url = f"http://{hostname}:{port}/v1/chat/completions"
         self.headers = {"Content-Type": "application/json"}
@@ -77,7 +74,12 @@ class R1TRACK:
             self.format_prompt = """You FIRST think about the reasoning process as an internal monologue and then provide the final answer. \n The reasoning process MUST BE enclosed within <think> </think> tags. The final answer MUST BE put in <answer> </answer> tags."""
         else:
             self.format_prompt = None
-        self.prompt = """Please identify the target specified by the bounding box <BBOXFLAG> in the first image and locate it in the second image. Return the coordinates in [x_min,y_min,x_max,y_max] format."""
+        # old_version prompt
+        # self.prompt = """Please identify the target specified by the bounding box <BBOXFLAG> in the first image and locate it in the second image. Return the coordinates in [x_min,y_min,x_max,y_max] format."""
+        
+        # new_version prompt (i.e. After 0503)
+        self.prompt = """<image> <image>Given two images, you need to:\n1. Analyze and Identify the target object marked by bounding box <BBOXFLAG> in <image_1>;\n2. Re-locate this target in <image_2>;\n3. Return [x_min, y_min, x_max, y_max] coordinates of the target in <image_2>."""
+
         if is_think_model:
             self.prompt = " ".join((self.format_prompt.strip(), self.prompt))
 
@@ -112,7 +114,6 @@ class R1TRACK:
             for video_name in self.video_names:
                 tracker = R1TRACK(
                     init_mode=self.init_mode,
-                    text_description=self.text_description,
                     hostname=self.hostname,
                     port=self.port,
                     model_name=self.model_name,
@@ -302,9 +303,25 @@ class R1TRACK:
             with open(file_path, 'r') as f:
                 content = f.read().strip()
                 return [float(num) for num in content.split(',')]
-        except Exception as e:
-            return []
+        except:
+            raise ValueError(f"Error: File not found at specified path: {file_path}.")
 
+    def read_1st_frame_text_description(self, file_path):
+        """Read text_description from file.
+
+        Args:
+            file_path: Path to text_description.txt file.
+
+        Returns:
+            text description.
+        """
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
+                text_description = f.read()
+            return f"Please return the coordinates of {text_description} in JSON format."
+        except:
+            raise ValueError(f"Error: File not found at specified path: {file_path}.")
+        
     def img2base64(self, img):
         """Convert OpenCV image to base64 string.
 
@@ -356,10 +373,10 @@ class R1TRACK:
         if self.init_mode == "bbox":
             gt_path = os.path.join(video_path, "groundtruth.txt")
             bbox1 = self.read_1st_frame_groundtruth(gt_path)
-        elif self.init_mode == "text" and self.text_description is not None:
-            bbox1 = self.get_bbox_from_text(im1, self.text_description)
-        elif self.init_mode == "text" and self.text_description is None:
-            raise ValueError("Please input the text_description!")
+        elif self.init_mode == "text":
+            text_path = os.path.join(video_path, "text_description.txt")
+            text_description = self.read_1st_frame_text_description(text_path)
+            bbox1 = self.get_bbox_from_text(im1, text_description)
         else:
             raise ValueError("Now only supports bbox and text init mode!")
         
@@ -418,10 +435,9 @@ class R1TRACK:
 if __name__ == "__main__":
     r1track = R1TRACK(
                  init_mode="bbox",
-                 text_description=None,
                  hostname="xx.xx.xxx.xx",
                  port=8888,
-                 model_name="R1-Track", 
+                 model_name="R1-Track",
                  is_think_model=True,
                  max_workers=8,
                  mllm_img_size=336,
