@@ -76,7 +76,7 @@ llamafactory-cli export examples/merge_lora/r1_track_lora_sft.yaml
 - **RL**
 1. *Env Preparation*
 ```bash
-Please refer to the official EasyR1 repo for env configuration guidelines, and add the supplied datasets and scripts to the specified directories as outlined in the documentation.
+Please refer to the official EasyR1 repo for env configuration guidelines.
 ```
 
 2. *Train*
@@ -99,7 +99,7 @@ python infer_script/r1track.py
 
 ## Results
 - Our initial R1-Track-GRPO model achieved an AO score of 0.586 on GOT10k test set without tuning any tracking hyperparameters (including template and search region sizes), using only 5k low-quality image pairs for training. In contrast, the preliminary R1-Track-SFT failed to produce valid test results due to severe overfitting.
-- Our R1-Track-GRPO-0503 model achieved an AO score of 0.681 on GOT10k test set.
+- Our R1-Track-GRPO-0503 model achieved an **AO** score of **0.681** on GOT10k test set.
 
 | Tracker/GOT10k                |Crop Size|Finetune Data| $AO$    |  $SR_{0.5}$  |  $SR_{0.75}$| Params       |Ckpt|
 |----|----|----|----|----|----|----|----|
@@ -109,8 +109,7 @@ python infer_script/r1track.py
 | **R1-Track-SFT**              |$336 \times 336$| R1-Track-5K |-        |-             |-            | 3B           |[R1-Track-SFT](https://huggingface.co/datasets/WangBiao/R1-Track-5k)  |
 | **R1-Track-GRPO**             |$336 \times 336$| R1-Track-5K |0.586    |0.676         |0.470        | 3B           |[R1-Track-GRPO](https://huggingface.co/WangBiao/R1-Track-GRPO)   |
 | **R1-Track-GRPO-wo-Think**    |$336 \times 336$| R1-Track-5k |0.585    |0.673         |0.500        | 3B           |  [R1-Track-GRPO-wo-Think](https://huggingface.co/WangBiao/R1-Track-GRPO-wo-Think) |
-| **R1-Track-GRPO-wo-Think-0503** |$336 \times 336$| R1-Track-100k |0.677    |0.764         |0.628      | 3B           |[R1-Track-GRPO-wo-Think-0503](https://huggingface.co/WangBiao/R1-Track-GRPO-wo-Think-0503)   |
-| **R1-Track-GRPO-wo-Think-0503** |$448 \times 448$| R1-Track-100k |0.681    |0.763         |0.630      | 3B           |[R1-Track-GRPO-wo-Think-0503](https://huggingface.co/WangBiao/R1-Track-GRPO-wo-Think-0503)   |
+| **R1-Track-GRPO-wo-Think-0503** |$336 \times 336$| R1-Track-100k |0.680    |0.766         |0.637      | 3B           |[R1-Track-GRPO-wo-Think-0503](https://huggingface.co/WangBiao/R1-Track-GRPO-wo-Think-0503)   |
 
 
 ## Timeline

@@ -418,13 +418,9 @@ class R1TRACK:
             y_min = max(0, last_bbox_new[1])
             box_w = max(1, min(last_bbox_new[2], w - x_min))
             box_h = max(1, min(last_bbox_new[3], h - y_min))
-            if x_min == 0 or y_min == 0 or box_w == 1 or box_h == 1 or box_w == w - x_min or box_h == h - y_min:
-                self.bbox_all.append(self.last_bbox)
-                self.time_all.append(time.time() - start_time)
-                continue                
-            else:
-                self.last_bbox = last_bbox_new
 
+            last_bbox_new = [x_min, y_min, box_w, box_h]
+            self.last_bbox = last_bbox_new
             self.xyxy_last = valid_bbox
             
             self.bbox_all.append(self.last_bbox)
