@@ -116,7 +116,8 @@ python infer_script/r1track.py
 
 
 ## Visualization
-[![R1-Track](https://youtu.be/jJUT1lQHYEE?si=GbEMoJ1RYuxGYpyS "R1-Track")]
+[![R1-Track](https://res.cloudinary.com/dw5xthrsp/image/upload/fl_preserve_transparency/v1746441821/f45rjma4gr9sgnpqae5a.jpg?_s=public-apps)](https://youtu.be/jJUT1lQHYEE?si=GbEMoJ1RYuxGYpyS "R1-Track")
+
 
 
 ## News
