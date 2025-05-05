@@ -1,5 +1,7 @@
 # R1-Track: Direct Application of MLLMs to Visual Object Tracking via Reinforcement Learning
-
+<div align="center">
+<img src="./figs/r1-track.png" width="1000"/>
+</div>
 - Visual (Single) Object Tracking aims to continuously localize and estimate the scale of a target in subsequent video frames, given only its initial state in the first frame. This task can be simplified to template matching between image pairs, with traditional trackers predominantly employing explicit classification-regression modeling through Correlation Filters, Siamese networks, and Vision Transformers (ViT). Leveraging advancements in Multi-Modal Large Language Models (MLLMs) such as Qwen2.5-VL and their robust grounding capabilities, we explore adopting MLLMs for end-to-end tracking tasks, eliminating the need for fragmented subtask modeling.
 
 - R1-Track supports flexible initialization from either **text descriptions** or **bounding boxes**.
@@ -112,7 +114,11 @@ python infer_script/r1track.py
 | **R1-Track-GRPO-wo-Think-0503** |$336 \times 336$| R1-Track-100k |0.680    |0.766         |0.637      | 3B           |[R1-Track-GRPO-wo-Think-0503](https://huggingface.co/WangBiao/R1-Track-GRPO-wo-Think-0503)   |
 
 
-## Timeline
+## Visualization
+https://youtu.be/jJUT1lQHYEE?si=GbEMoJ1RYuxGYpyS
+
+
+## News
 - [2025/04/02] **We released 🤗[R1-Track-5K](https://huggingface.co/datasets/WangBiao/R1-Track-5k) dataset!**
 - [2025/04/20] **We released 🤗[R1-Track-SFT](https://huggingface.co/WangBiao/R1-Track-SFT) model!**
 - [2025/04/24] **We released 🤗[R1-Track-Data-ShareGPT](https://huggingface.co/datasets/WangBiao/R1-Track-Data-ShareGPT) dataset. You can effortlessly integrate it with [LlamaFactory](https://github.com/hiyouga/LLaMA-Factory) for use!**
@@ -124,12 +130,13 @@ python infer_script/r1track.py
 
 
 ## TODO
-- 1. Train the 7B model;
-- 2. Support for multiple images;
-- 3. Explore improved methods for generating cold-start data;
-- 4. Supports evaluating other datasets.
+- [x] Generate a more refined, large-scale, and diversified dataset based on existing tracking training data;
+- [ ] Train the 7B model;
+- [ ] Support for multi-image or video (i.e. temporal information modeling);
+- [ ] Explore improved methods for generating cold-start COT data;
+- [ ] Supports evaluating other tracking datasets.
 
-We will strive to elevate R1-Track to the `T1` level of trackers.
+We will strive to elevate R1-Track to the `T0` level of trackers.
 
 
 # Acknowledgement
