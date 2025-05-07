@@ -60,7 +60,7 @@
 
 
 ## Quick Start
-- **SFT**
+- **SFT (Optional)**
 1. *Env Preparation*
 ```bash
 Please refer to the official LLaMA-Factory repo for env configuration guidelines, and add the supplied datasets and scripts to the specified directories as outlined in the documentation.
@@ -99,20 +99,26 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python -m vllm.entrypoints.openai.api_server --serv
 python infer_script/r1track.py
 ```
 
+- **Generate data (Optional)**
+```bash
+python generation_data/sampling_data.py
+python generation_data/gen_huggingface_data.py
+```
+
 
 ## Results
 - Our initial R1-Track-GRPO model achieved an AO score of 0.586 on GOT10k test set without tuning any tracking hyperparameters (including template and search region sizes), using only 5k low-quality image pairs for training. In contrast, the preliminary R1-Track-SFT failed to produce valid test results due to severe overfitting.
-- Our R1-Track-GRPO-0503 model achieved an **AO** score of **0.681** on GOT10k test set.
+- Our R1-Track-GRPO-0503 model achieved an **AO** score of **0.680** on GOT10k test set.
 
 | Tracker/GOT10k                |Crop Size|Finetune Data| $AO$    |  $SR_{0.5}$  |  $SR_{0.75}$| Params       |Ckpt|
 |----|----|----|----|----|----|----|----|
 |LLaVA-1.5                      |-|-|0.235|0.202|-            | 7B           |-   |
 |Qwen2.5-VL-7B-Instruct         |-|-|0.126|0.011|-            | 7B           |-   |
 |Qwen2.5-VL-72B-Instruct        |-|-|-    |-    |-            | 72B          |-   |
-| **R1-Track-SFT**              |$336 \times 336$| R1-Track-5K |-        |-             |-            | 3B           |[R1-Track-SFT](https://huggingface.co/datasets/WangBiao/R1-Track-5k)  |
-| **R1-Track-GRPO**             |$336 \times 336$| R1-Track-5K |0.586    |0.676         |0.470        | 3B           |[R1-Track-GRPO](https://huggingface.co/WangBiao/R1-Track-GRPO)   |
-| **R1-Track-GRPO-wo-Think**    |$336 \times 336$| R1-Track-5k |0.585    |0.673         |0.500        | 3B           |  [R1-Track-GRPO-wo-Think](https://huggingface.co/WangBiao/R1-Track-GRPO-wo-Think) |
-| **R1-Track-GRPO-wo-Think-0503** |$336 \times 336$| R1-Track-100k |0.680    |0.766         |0.637      | 3B           |[R1-Track-GRPO-wo-Think-0503](https://huggingface.co/WangBiao/R1-Track-GRPO-wo-Think-0503)   |
+| R1-Track-SFT              |$336 \times 336$| R1-Track-5K |-        |-             |-            | 3B           |[R1-Track-SFT](https://huggingface.co/WangBiao/R1-Track-SFT)  |
+| R1-Track-GRPO             |$336 \times 336$| R1-Track-5K |0.586    |0.676         |0.470        | 3B           |[R1-Track-GRPO](https://huggingface.co/WangBiao/R1-Track-GRPO)   |
+| R1-Track-GRPO-wo-Think    |$336 \times 336$| R1-Track-5k |0.585    |0.673         |0.500        | 3B           |  [R1-Track-GRPO-wo-Think](https://huggingface.co/WangBiao/R1-Track-GRPO-wo-Think) |
+| **R1-Track-GRPO-wo-Think-0503** |$336 \times 336$| R1-Track-100k |**0.680**    |**0.766**         |**0.637**      | 3B           |[R1-Track-GRPO-wo-Think-0503](https://huggingface.co/WangBiao/R1-Track-GRPO-wo-Think-0503)   |
 
 
 ## Visualization
@@ -129,14 +135,17 @@ python infer_script/r1track.py
 - [2025/04/28] **We released 🤗[R1-Track-GRPO](https://huggingface.co/WangBiao/R1-Track-GRPO) model!**
 - [2025/04/28] **We released 🤗[R1-Track-GRPO-wo-Think](https://huggingface.co/WangBiao/R1-Track-GRPO-wo-Think) model!**
 - [2025/05/03] **We released 🤗[R1-Track-100K](https://huggingface.co/datasets/WangBiao/R1-Track-100k) dataset!**
+- [2025/05/07] **We released a simple script for generating RL training data!**
+- [2025/05/07] **We released 🤗[R1-Track-GRPO-wo-Think-0503](https://huggingface.co/WangBiao/R1-Track-GRPO-wo-Think-0503)!**
 
 
 ## TODO
 - [x] Generate a more refined, large-scale, and diversified dataset based on existing tracking training data;
 - [ ] Train the 7B model;
 - [ ] Support for multi-image or video (i.e. temporal information modeling);
-- [ ] Explore improved methods for generating cold-start COT data;
-- [ ] Supports evaluating other tracking datasets.
+- [ ] Explore improved methods for generating cold-start COT data and train a real COT model;
+- [ ] Supports evaluating other tracking datasets;
+- [ ] ......
 
 We will strive to elevate R1-Track to the `T0` level of trackers.
 
