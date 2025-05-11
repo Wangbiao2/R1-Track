@@ -131,7 +131,7 @@ python infer_script/r1track.py
 
 ## News
 - [2025/04/02] **We released 🤗[R1-Track-5K](https://huggingface.co/datasets/WangBiao/R1-Track-5k) dataset!**
-- [2025/04/20] **We released 🤗[R1-Track-SFT] (https://huggingface.co/WangBiao/R1-Track-SFT-5k-lora) lora weights, fine-tuned on the R1-Track-5k!**
+- [2025/04/20] **We released 🤗[R1-Track-SFT](https://huggingface.co/WangBiao/R1-Track-SFT-5k-lora) lora weights, fine-tuned on the R1-Track-5k!**
 - [2025/04/24] **We released 🤗[R1-Track-Data-ShareGPT](https://huggingface.co/datasets/WangBiao/R1-Track-Data-ShareGPT) dataset. You can effortlessly integrate it with [LlamaFactory](https://github.com/hiyouga/LLaMA-Factory) for use!**
 - [2025/04/27] **We released the R1-Track inference script for GOT-10k dataset evaluation!**
 - [2025/04/27] **We released the R1-Track-GRPO training script based on [EasyR1](https://github.com/hiyouga/EasyR1)!**
