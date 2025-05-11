@@ -65,7 +65,7 @@ def track_compute_score_not_think(predict_str: str, ground_truth: str, response_
         giou_reward = 0.0
     elif giou_reward > 0.75 and giou_reward < 0.95:
         giou_reward += 0.2
-    elif giou_reward > 0.95:
+    elif giou_reward >= 0.95:
         giou_reward += 0.5
 
     return {

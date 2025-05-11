@@ -55,7 +55,7 @@ def track_compute_score(predict_str: str, ground_truth: str, response_length) ->
     else:
         format_reward = 1.0
 
-    if response_length < 96:
+    if response_length < 128:
         return {"overall": -1.0, "format": 0.0, "giou": 0.0, "length": 0.0}
 
     predict_str = check_and_extract(predict_str)
@@ -75,17 +75,17 @@ def track_compute_score(predict_str: str, ground_truth: str, response_length) ->
         giou_reward = 0.0
     elif giou_reward > 0.75 and giou_reward < 0.95:
         giou_reward += 0.2
-    elif giou_reward > 0.95:
+    elif giou_reward >= 0.95:
         giou_reward += 0.5
     
-    if response_length > 384:
-        length_reward = (384 - response_length) / (512 - 384)
+    if response_length > 448:
+        length_reward = (448 - response_length) / (512 - 448)
     else:
         length_reward = 0.0
 
         
     return {
-        "overall": giou_reward + 0.1*format_reward + 0.5*length_reward,
+        "overall": giou_reward + 0.05*format_reward + 0.1*length_reward,
         "format": format_reward,
         "giou": giou_reward_copy,
         "length": length_reward
