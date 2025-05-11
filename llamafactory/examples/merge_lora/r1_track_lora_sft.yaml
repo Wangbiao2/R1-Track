@@ -2,7 +2,7 @@
 
 ### model
 model_name_or_path: Qwen/Qwen2.5-VL-3B-Instruct
-adapter_name_or_path: saves/r1_track-500step
+adapter_name_or_path: saves/r1_track_lora-500step
 template: qwen2_vl
 trust_remote_code: true
 
