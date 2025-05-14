@@ -121,7 +121,10 @@ python infer_script/r1track.py
 | R1-Track-GRPO             |$336 \times 336$| R1-Track-5K |0.586    |0.676         |0.470        | 3B           |[R1-Track-GRPO](https://huggingface.co/WangBiao/R1-Track-GRPO-5k)   |
 | R1-Track-GRPO-wo-Think    |$336 \times 336$| R1-Track-5k |0.585    |0.673         |0.500        | 3B           |  [R1-Track-GRPO-wo-Think](https://huggingface.co/WangBiao/R1-Track-GRPO-wo-Think-5k) |
 | R1-Track-SFT |$336 \times 336$| R1-Track-100k |0.667    |0.746         |0.620      | 3B           |[R1-Track-SFT-0503-lora](https://huggingface.co/WangBiao/R1-Track-SFT-100k-lora)   |
+| R1-Track-GRPO |$336 \times 336$| R1-Track-100k |0.672    |0.759         |0.624      | 3B           |-   |
 | **R1-Track-GRPO-wo-Think** |$336 \times 336$| R1-Track-100k |**0.680**    |**0.766**         |**0.637**      | 3B           |[R1-Track-GRPO-wo-Think-0503](https://huggingface.co/WangBiao/R1-Track-GRPO-wo-Think-100k)   |
+
+`Note: In our experiment, we found that letting the 3b base model (without cold-start by COT data) directly output the result instead of following <think></think><answer></answer> would lead to a much higher score on GOT-10k.`
 
 
 ## Visualization
@@ -147,6 +150,7 @@ python infer_script/r1track.py
 - [x] Generate a more refined, large-scale, and diversified dataset based on existing tracking training data;
 - [ ] Train the 7B model;
 - [ ] Support for multi-image or video (i.e. temporal information modeling);
+- [ ] Support for RGB, RGB-T, RGB-D, RGB-E modalities simultaneously;
 - [ ] Explore improved methods for generating cold-start COT data and train a real COT model;
 - [ ] Supports evaluating other tracking datasets;
 - [ ] ......
